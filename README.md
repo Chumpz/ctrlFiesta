@@ -1,3 +1,6 @@
+This tool has 2 in one.
+You can write the name of an existing curve in your scene, select your joints and then create FKchain.
+Or you can draw a curve, press save and you will have your curve saved in your custom library. After that select your joints and press the desired curve to create your chain.
 
 *Open ctrlCreatorVinc.py and change the path 
 where you want your thumbnails to be saved.
