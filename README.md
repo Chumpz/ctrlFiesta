@@ -15,4 +15,4 @@ where you want to store your shape files.
 import ctrlFiesta
 ctrlFiesta.createFKWindow()
 
-![](icon/CTRL_CREATOR_Vinc.png)
+![control_icon](icon/CTRL_CREATOR_Vinc.png)
