@@ -9,6 +9,6 @@ After that select your joints and press the desired curve to create your chain.
 
 2.Place the __init__ file on your maya shelf:
 
-3.Use the icon the icon folder or make your own.
+3.Use the image in the icon folder or make your own icon.
 
 ![control_icon](icon/CTRL_CREATOR_Vinc.png)
