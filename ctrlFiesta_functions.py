@@ -3,8 +3,11 @@ from maya.mel import *
 import os, sys, re, stat, functools,shutil, platform, logging
 import ctrlFiesta_util
 
-#Path to a folder where your shapes jsom file will be saved
-SHAPE_LIBRARY_PATH="C:\\Users\\vincent.brandt\\Documents\\maya\\2018\\scripts\\shapeLibrary"
+#Path to a folder where your shapes json file will be saved
+MAYA_APP_DIR = os.getenv('MAYA_APP_DIR')
+SHAPE_LIBRARY_PATH="{0}\scripts\shapeLibrary".format(MAYA_APP_DIR)
+if not os.path.exists(SHAPE_LIBRARY_PATH):
+    os.makedirs(SHAPE_LIBRARY_PATH)
 sel = cmds.ls(sl=1)
 
 
@@ -51,18 +54,14 @@ def loadFromLib(shape=None):
     return data
 
 
-def saveToLib(crv=None,
-    shapeName=None):
+def saveToLib(crv=None, shapeName=None):
     crvShape = getShape(crv=crv)
     path = os.path.join(SHAPE_LIBRARY_PATH, re.sub("\s", "", shapeName) + ".json")
     for shapeDict in crvShape:
         shapeDict.pop("colour", None)
         ctrlFiesta_util.saveData(path, crvShape)
-
-  
-
+        
 
 #----------  
-
 
 

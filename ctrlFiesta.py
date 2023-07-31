@@ -7,9 +7,10 @@ import ctrlFiesta_util as uFiesta
 import re
 
 #Path to a folder where your thumbnails will be saved
-path="C:\\Users\\vincent.brandt\\Documents\\maya\\projects\\default\\images\\curveShapes\\"
+MAYA_APP_DIR = os.getenv('MAYA_APP_DIR')
+path='{0}/projects/default/images/curveShapes/'.format(MAYA_APP_DIR)
 
-def selo():
+def selected():
     selection=cmds.ls(sl=1)
     return selection 
     
@@ -27,25 +28,21 @@ def callback_fn(myValue, *_):  # _ignore swallows the original button argument
         for a in x:
             poid = x.get('points')
             points = map(tuple, poid)
-            #print points
             break
         for a in x:
             knots = x.get('knots')
-            #print knots
             break
         for a in x:
             degree = x.get('degree')
-            #print degree
             break
         for a in x:
             form = x.get('form')
-            #print form
             break
             
-    selected=selo()
+    sel=selected()
     tempCrv = cmds.curve(p=points, k=knots, per=bool(form), d=degree)
     cmds.rename(tempCrv, 'tempCrv')
-    cmds.select(selected)
+    cmds.select(sel)
     ctrlFromInput(controller='tempCrv')
     cmds.delete('tempCrv')
             
@@ -56,10 +53,12 @@ def createFKWindow():
        
 
     if cmds.window(windowID, exists = True):
-        cmds.deleteUI('window')        
+        cmds.deleteUI(windowID, window=True, control=True)        
+    if(cmds.windowPref(windowID, q=True, exists=True)):
+        cmds.windowPref(windowID, remove=True)
 
-
-    window = cmds.window(windowID)
+    window = cmds.window(windowID, widthHeight=(415, 350))
+    cmds.scrollLayout()
     cmds.rowColumnLayout()
     
     cmds.text('This tool has 2 in one.')
@@ -67,15 +66,17 @@ def createFKWindow():
     cmds.text('Or draw a curve, press save, select joints and press the desired curve. \n', align='left')
 
     #FK to CTRL creator
-    cmds.textFieldGrp( 'textField_A', label = 'CTRL curve: ' )
+    cmds.textFieldGrp( 'textField_A', label = 'CTRL curve: ')
     
     cmds.button(label = 'Create FKchain', command = ctrlFromText)
         
     #Tumbnail creator
     cmds.button(label = 'Save curve', command = tumbnailCreator)
+    
+    cmds.rowColumnLayout( numberOfColumns=2, columnOffset=(2, 'both', 20) )
         
-    list = cmds.getFileList( folder=path, filespec='*.jpg' )
-    for x in list:
+    file_list = cmds.getFileList( folder=path, filespec='*.jpg' )
+    for x in file_list:
         listm=x.split("|")[-1]
         regularExpr = ".jpg"
         result = re.sub(regularExpr, "", listm)
@@ -86,7 +87,7 @@ def createFKWindow():
 
 
 def tumbnailCreator(args=None):
-    sel=selo()
+    sel=selected()
     shapesel = '\n'.join(cmds.listRelatives(sel[0], shapes=True))
     
     obj=str(sel[0]).split("|")[-1]    
@@ -113,12 +114,12 @@ def tumbnailCreator(args=None):
                          height=70,
                          framePadding=0,
                          format="image")
-    createFKWindow()
+
 
 
 def ctrlFromInput(controller=None):
     preParent = None
-    sel = selo()
+    sel = selected()
     for i in sel:
         cmds.select(cl=1)
         if controller == None or cmds.objExists(controller) == False:
@@ -143,7 +144,8 @@ def ctrlFromText(args=None):
     else:
         ctrlFromInput(controller=textFieldIn)
 
-createFKWindow()
+if __name__ == "__main__":
+    createFKWindow()
 #------
 
 
