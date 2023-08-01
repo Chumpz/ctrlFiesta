@@ -5,10 +5,9 @@ import ctrlFiesta_util
 
 #Path to a folder where your shapes json file will be saved
 MAYA_APP_DIR = os.getenv('MAYA_APP_DIR')
-SHAPE_LIBRARY_PATH="{0}\scripts\shapeLibrary".format(MAYA_APP_DIR)
+SHAPE_LIBRARY_PATH="{0}/scripts/shapeLibrary".format(MAYA_APP_DIR)
 if not os.path.exists(SHAPE_LIBRARY_PATH):
     os.makedirs(SHAPE_LIBRARY_PATH)
-sel = cmds.ls(sl=1)
 
 
 def getShape(crv= None):
@@ -63,5 +62,3 @@ def saveToLib(crv=None, shapeName=None):
         
 
 #----------  
-
-

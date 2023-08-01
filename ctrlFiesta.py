@@ -27,7 +27,7 @@ def callback_fn(myValue, *_):  # _ignore swallows the original button argument
     for x in loadFromLb:
         for a in x:
             poid = x.get('points')
-            points = map(tuple, poid)
+            points = list(map(tuple, poid))
             break
         for a in x:
             knots = x.get('knots')
