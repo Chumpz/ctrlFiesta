@@ -2,6 +2,7 @@ import os
 import json
 from maya import cmds as mc, OpenMaya as om
 
+
 def validatePath(path=None):
     if os.path.isfile(path):
         confirm = mc.confirmDialog(title='Overwrite file?',
@@ -26,8 +27,7 @@ def loadData(path=None):
         mc.error("The file " + path + " doesn't exist")
 
 
-def saveData(path=None,
-             data=None):
+def saveData(path=None, data=None):
     '''Saves a dictionary as JSON in a file'''
     if validatePath(path):
         f = open(path, "w")
@@ -36,17 +36,17 @@ def saveData(path=None,
         return 1
     return 0    
     
-def getKnots(crvShape=None):
+def getKnots(crv_shape=None):
     mObj = om.MObject()
     sel = om.MSelectionList()
-    sel.add(crvShape)
+    sel.add(crv_shape)
     sel.getDependNode(0, mObj)
     
-    fnCurve = om.MFnNurbsCurve(mObj)
-    tmpKnots = om.MDoubleArray()
-    fnCurve.getKnots(tmpKnots)
+    fn_curve = om.MFnNurbsCurve(mObj)
+    tmp_knots = om.MDoubleArray()
+    fn_curve.getKnots(tmp_knots)
     
-    return [tmpKnots[i] for i in range(tmpKnots.length())]
+    return [tmp_knots[i] for i in range(tmp_knots.length())]
     
 def byteify(input):
     if isinstance(input, dict):
@@ -58,4 +58,5 @@ def byteify(input):
         return input.encode('utf-8')
     else:
         return input
-    
+
+#---------- 
