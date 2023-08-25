@@ -1,3 +1,10 @@
 import ctrlFiesta
 
-ctrlFiesta.createFKWindow()
+try:
+    ctrl_fiesta_ui.close() # pylint: disable=E0601
+    ctrl_fiesta_ui.deleteLater()
+except:
+    pass
+
+ctrl_fiesta_ui = ctrlFiestaUi()
+ctrl_fiesta_ui.show()

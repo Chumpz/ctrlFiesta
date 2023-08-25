@@ -24,7 +24,7 @@ if not os.path.exists(THUMBNAIL_LIBRARY_PATH):
     os.makedirs(THUMBNAIL_LIBRARY_PATH)
     
 
-class ShotManagerUi(QtWidgets.QDialog):
+class ctrlFiestaUi(QtWidgets.QDialog):
 
     WINDOW_TITLE = "Control Fiesta"
     
@@ -37,7 +37,7 @@ class ShotManagerUi(QtWidgets.QDialog):
             return wrapInstance(long(main_window_ptr), QtWidgets.QWidget) # pylint: disable=E0602
 
     def __init__(self):
-        super(ShotManagerUi, self).__init__(self.maya_main_window())
+        super(ctrlFiestaUi, self).__init__(self.maya_main_window())
 
         self.setWindowTitle(self.WINDOW_TITLE)
         self.setMinimumSize(415, 440)
@@ -397,12 +397,12 @@ class ReferenceWidget(QtWidgets.QWidget):
 if __name__ == "__main__":
 
     try:
-        shot_manager_ui.close() # pylint: disable=E0601
-        shot_manager_ui.deleteLater()
+        ctrl_fiesta_ui.close() # pylint: disable=E0601
+        ctrl_fiesta_ui.deleteLater()
     except:
         pass
 
-    shot_manager_ui = ShotManagerUi()
-    shot_manager_ui.show()
+    ctrl_fiesta_ui = ctrlFiestaUi()
+    ctrl_fiesta_ui.show()
 
 #---------- 
