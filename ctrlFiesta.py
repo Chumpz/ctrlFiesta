@@ -75,7 +75,6 @@ class ctrlFiestaUi(QtWidgets.QDialog):
             cmds.select(cl=1)
             if controller == None or cmds.objExists(controller) == False:
                 controller1 = cmds.circle( nr = (1, 0, 0 ), r = (0.8), name = i + "_CTRL")[0]
-                print("uh oh no curve")
                 cmds.warning("No curve was found, default circle used instead")
             else:
                 controller1 = cmds.duplicate(controller, name = i + "_CTRL")[0]
@@ -183,19 +182,23 @@ class ClickableIcon(QtWidgets.QPushButton):
                 break
                     
         sel=fFiesta.selected()
-        selection=cmds.ls(sl=1)
         temp_crv = cmds.curve(p=points, k=knots, per=formd, d=degree)
-        cmds.rename(temp_crv, "temp_crv")
-        cmds.select(sel)
-        ctrlFromInput(controller="temp_crv")
-        cmds.delete("temp_crv")
+        if sel:
+            cmds.rename(temp_crv, "temp_crv")
+            cmds.select(sel)
+            ctrlFiestaUi.ctrlFromInput(self, controller="temp_crv")
+            cmds.delete("temp_crv")
+        if not sel:
+            temp_crv
+            cmds.rename(temp_crv, cleaned)
+        cmds.select(deselect=True)
+            
 
 
 class ThumbnailControlWidget(QtWidgets.QWidget):
         
     def __init__(self, parent=None):
         super(ThumbnailControlWidget, self).__init__(parent)
-        self.myValue = ""
         
         layout = QtWidgets.QVBoxLayout()
         scroll_area = QtWidgets.QScrollArea()
